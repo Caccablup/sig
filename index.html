@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Peta Sehat Pekanbaru</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css" />
+    <link rel="stylesheet" href="css/L.Control.Locate.min.css" />
+    <link rel="stylesheet" href="css/qgis2web.css" />
+    <link rel="stylesheet" href="css/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="css/MarkerCluster.css" />
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="css/leaflet-search.css" />
+    <link rel="stylesheet" href="css/leaflet.photon.css" />
+    <link rel="stylesheet" href="css/leaflet-measure.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="#beranda" class="brand">
+          <span class="brand-icon"
+            ><i class="fa-solid fa-location-dot"></i
+          ></span>
+          <span>
+            <strong>Peta Sehat Pekanbaru</strong>
+            <small>Direktori Fasilitas Kesehatan Kota Pekanbaru</small>
+          </span>
+        </a>
+
+        <nav class="navbar">
+          <a href="#beranda" class="nav-link active">Beranda</a>
+          <a href="#data-faskes" class="nav-link">Data Faskes</a>
+          <a href="#peta" class="nav-link">Peta</a>
+          <a href="#info-kesehatan" class="nav-link">Informasi</a>
+          <a href="#tentang" class="nav-link">Tentang</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section id="beranda" class="hero page-section">
+        <div class="hero-carousel">
+          <div
+            class="hero-slide active"
+            style="
+              background-image: url(&quot;img/rsawalbrossudirman.jpeg&quot;);
+            "
+          ></div>
+          <div
+            class="hero-slide"
+            style="background-image: url(&quot;img/rsiaannisa.jpeg&quot;)"
+          ></div>
+          <div
+            class="hero-slide"
+            style="background-image: url(&quot;img/ppayungsekaki.jpeg&quot;)"
+          ></div>
+          <div
+            class="hero-slide"
+            style="background-image: url(&quot;img/ptenayanraya.jpeg&quot;)"
+          ></div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-content">
+          <div class="hero-text reveal">
+            <h1>Peta Sebaran Fasilitas Kesehatan Kota Pekanbaru</h1>
+            <p>Temukan rumah sakit dan puskesmas di Kota Pekanbaru</p>
+
+            <div class="hero-actions">
+              <a href="#peta" class="btn btn-primary">
+                <i class="fa-solid fa-map-location-dot"></i>
+                Jelajahi Peta
+              </a>
+
+              <a href="#data-faskes" class="btn-data-card">
+                <span><i class="fa-solid fa-table-list"></i></span>
+                <div>
+                  <strong>Lihat Data Faskes</strong>
+                  <small>Daftar rumah sakit dan puskesmas</small>
+                </div>
+                <i class="fa-solid fa-arrow-down"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-dots">
+          <button class="dot active" data-slide="0"></button>
+          <button class="dot" data-slide="1"></button>
+          <button class="dot" data-slide="2"></button>
+          <button class="dot" data-slide="3"></button>
+        </div>
+      </section>
+
+      <!-- RINGKASAN -->
+      <section id="ringkasan" class="summary-section page-section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <h2>Jumlah Fasilitas Kesehatan yang Ditampilkan</h2>
+          </div>
+
+          <div class="summary-grid">
+            <article class="summary-card reveal">
+              <span class="summary-icon red"
+                ><i class="fa-solid fa-hospital"></i
+              ></span>
+              <div>
+                <h3 class="counter" data-target="31">0</h3>
+                <p>Rumah Sakit</p>
+              </div>
+            </article>
+
+            <article class="summary-card reveal">
+              <span class="summary-icon green"
+                ><i class="fa-solid fa-house-medical"></i
+              ></span>
+              <div>
+                <h3 class="counter" data-target="21">0</h3>
+                <p>Puskesmas</p>
+              </div>
+            </article>
+
+            <article class="summary-card reveal">
+              <span class="summary-icon blue"
+                ><i class="fa-solid fa-location-dot"></i
+              ></span>
+              <div>
+                <h3 class="counter" data-target="52">0</h3>
+                <p>Total Titik</p>
+              </div>
+            </article>
+
+            <article class="summary-card reveal">
+              <span class="summary-icon purple"
+                ><i class="fa-solid fa-city"></i
+              ></span>
+              <div>
+                <h3 class="counter" data-target="15">0</h3>
+                <p>Kecamatan</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- DATA FASKES -->
+      <section id="data-faskes" class="data-section page-section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <h2>Data Fasilitas Kesehatan</h2>
+          </div>
+
+          <div class="data-card reveal">
+            <div class="data-toolbar">
+              <div class="input-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                  type="text"
+                  id="tableSearch"
+                  placeholder="Cari nama, kategori, atau wilayah..."
+                />
+              </div>
+
+              <select id="tableCategory">
+                <option value="semua">Semua Faskes</option>
+                <option value="Rumah Sakit">Rumah Sakit</option>
+                <option value="Puskesmas">Puskesmas</option>
+              </select>
+            </div>
+
+            <div class="table-info" id="tableInfo">
+              Menampilkan 10 dari 52 data faskes
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Fasilitas</th>
+                    <th>Kategori</th>
+                    <th>Wilayah</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="dataTable"></tbody>
+              </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PETA -->
+      <section id="peta" class="map-section page-section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <h2>Peta Sebaran Fasilitas Kesehatan</h2>
+          </div>
+
+          <div class="map-layout reveal">
+            <aside class="filter-panel same-height">
+              <div class="panel-head">
+                <div>
+                  <h3>Cari Faskes</h3>
+                  <p>Temukan rumah sakit dan puskesmas dengan cepat.</p>
+                </div>
+                <span><i class="fa-solid fa-filter"></i></span>
+              </div>
+
+              <div class="input-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input
+                  type="text"
+                  id="mapSearch"
+                  placeholder="Cari nama atau wilayah..."
+                />
+              </div>
+
+              <select id="mapCategory">
+                <option value="semua">Semua Faskes</option>
+                <option value="Rumah Sakit">Rumah Sakit</option>
+                <option value="Puskesmas">Puskesmas</option>
+              </select>
+
+              <div class="result-count" id="mapResultCount">
+                Menampilkan 52 dari 52 data faskes
+              </div>
+              <div class="facility-list" id="facilityList"></div>
+            </aside>
+
+            <div class="map-panel same-height">
+              <div class="map-head">
+                <div>
+                  <h3>Peta Lokasi Faskes</h3>
+                  <p>Kota Pekanbaru, Provinsi Riau</p>
+                </div>
+
+                <div class="legend">
+                  <span><i class="legend-dot red"></i> Rumah Sakit</span>
+                  <span><i class="legend-dot green"></i> Puskesmas</span>
+                </div>
+              </div>
+
+              <iframe
+                src="PETA/index.html"
+                width="100%"
+                height="600"
+                style="border: none; border-radius: 20px"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INFO KESEHATAN -->
+      <section id="info-kesehatan" class="health-section page-section">
+        <div class="container">
+          <div class="section-heading reveal">
+            <h2>Fakta dan Informasi Menarik tentang Kesehatan</h2>
+          </div>
+
+          <div class="health-grid">
+            <article class="health-main reveal">
+              <span><i class="fa-solid fa-child-reaching"></i></span>
+              <h3>Cegah stunting sejak dini</h3>
+              <p>
+                Stunting dapat dicegah dengan pemenuhan gizi seimbang,
+                pemeriksaan kehamilan, imunisasi, dan pemantauan tumbuh kembang
+                anak secara rutin.
+              </p>
+              <ul>
+                <li><i class="fa-solid fa-check"></i> Perhatikan gizi anak</li>
+                <li>
+                  <i class="fa-solid fa-check"></i> Rutin ke posyandu atau
+                  puskesmas
+                </li>
+                <li>
+                  <i class="fa-solid fa-check"></i> Jaga kebersihan lingkungan
+                </li>
+              </ul>
+            </article>
+
+            <div class="health-list">
+              <article class="reveal">
+                <span class="green"
+                  ><i class="fa-solid fa-hand-holding-medical"></i
+                ></span>
+                <div>
+                  <h3>Pemeriksaan rutin membantu deteksi dini</h3>
+                  <p>
+                    Pemeriksaan kesehatan dapat membantu menemukan masalah sejak
+                    awal.
+                  </p>
+                </div>
+              </article>
+
+              <article class="reveal">
+                <span class="red"><i class="fa-solid fa-droplet"></i></span>
+                <div>
+                  <h3>Air bersih penting untuk kesehatan</h3>
+                  <p>
+                    Kualitas air dan kebersihan makanan membantu mencegah
+                    penyakit menular.
+                  </p>
+                </div>
+              </article>
+
+              <article class="reveal">
+                <span class="blue"
+                  ><i class="fa-solid fa-person-walking"></i
+                ></span>
+                <div>
+                  <h3>Aktif bergerak membuat tubuh lebih bugar</h3>
+                  <p>
+                    Aktivitas ringan secara rutin dapat membantu menjaga daya
+                    tahan tubuh.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TENTANG -->
+      <section id="tentang" class="about-section page-section">
+        <div class="container about-grid">
+          <div class="reveal">
+            <h2>Tentang Website</h2>
+            <p>
+              Peta Sehat Pekanbaru dibuat sebagai website satu halaman untuk
+              menampilkan ringkasan data, daftar fasilitas kesehatan, peta
+              sebaran, dan informasi kesehatan secara sederhana.
+            </p>
+          </div>
+
+          <div class="about-cards">
+            <article class="reveal">
+              <i class="fa-solid fa-map-location-dot"></i>
+              <h3>Berbasis Peta</h3>
+              <p>
+                Menampilkan titik lokasi rumah sakit dan puskesmas secara
+                visual.
+              </p>
+            </article>
+
+            <article class="reveal">
+              <i class="fa-solid fa-table-list"></i>
+              <h3>Data Mudah Dibaca</h3>
+              <p>Data faskes disusun dalam tabel, filter, dan daftar lokasi.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div class="footer-brand">
+          <h2>Peta Sehat Pekanbaru</h2>
+          <p>
+            Website informasi fasilitas kesehatan yang membantu masyarakat
+            menemukan rumah sakit dan puskesmas di Kota Pekanbaru secara mudah
+            dan cepat.
+          </p>
+          <div class="footer-tags">
+            <span><i class="fa-solid fa-location-dot"></i> Pekanbaru</span>
+            <span
+              ><i class="fa-solid fa-heart-pulse"></i> Fasilitas Kesehatan</span
+            >
+          </div>
+        </div>
+
+        <div>
+          <h3>Navigasi</h3>
+          <a href="#beranda">Beranda</a>
+          <a href="#ringkasan">Ringkasan</a>
+          <a href="#data-faskes">Data Faskes</a>
+          <a href="#peta">Peta</a>
+          <a href="#tentang">Tentang</a>
+        </div>
+
+        <div>
+          <h3>Informasi</h3>
+          <a href="#data-faskes">Rumah Sakit</a>
+          <a href="#data-faskes">Puskesmas</a>
+          <a href="#peta">Sebaran Lokasi</a>
+          <a href="#info-kesehatan">Info Kesehatan</a>
+        </div>
+
+        <div class="footer-card">
+          <h3>Project SIG</h3>
+          <p>
+            Pemetaan fasilitas kesehatan Kota Pekanbaru berbasis website untuk
+            mendukung akses informasi layanan kesehatan.
+          </p>
+          <div class="footer-mini-tags">
+            <span><i class="fa-solid fa-map"></i> SIG</span>
+            <span><i class="fa-solid fa-globe"></i> WebGIS</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container copyright">
+        <p>
+          © 2026 Peta Sehat Pekanbaru. Informasi fasilitas kesehatan Kota
+          Pekanbaru.
+        </p>
+      </div>
+    </footer>
+
+    <button class="to-top" id="toTop">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <script>
+      const facilities = [
+        // ==================== RUMAH SAKIT ====================
+        {
+          name: "RSUD Petala Bumi",
+          category: "Rumah Sakit",
+          area: "Lima Puluh",
+        },
+        {
+          name: "RSUD Arifin Achmad",
+          category: "Rumah Sakit",
+          area: "Pekanbaru Kota",
+        },
+        {
+          name: "RSIA Zainab",
+          category: "Rumah Sakit",
+          area: "Sail",
+        },
+        {
+          name: "RSIA Budhi Mulia",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RSIA Annisa",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RSD Madani Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Binawidya",
+        },
+        {
+          name: "RSAU dr. SUKIRMAN",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RS Universitas Riau",
+          category: "Rumah Sakit",
+          area: "Binawidya",
+        },
+        {
+          name: "RS Tentara Level 4 Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Senapelan",
+        },
+        {
+          name: "RS Syafira Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RS SMEC Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RS Santa Maria",
+          category: "Rumah Sakit",
+          area: "Sukajadi",
+        },
+        {
+          name: "RS Sansani Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RS Prof. Dr. Tabrani",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "RS Prima Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Binawidya",
+        },
+        {
+          name: "RS Pekanbaru Medical Center",
+          category: "Rumah Sakit",
+          area: "Sail",
+        },
+        {
+          name: "RS Murni Teguh Eria",
+          category: "Rumah Sakit",
+          area: "Sukajadi",
+        },
+        {
+          name: "RS Lancang Kuning",
+          category: "Rumah Sakit",
+          area: "Sail",
+        },
+        {
+          name: "RS JMB Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Rumbai",
+        },
+        {
+          name: "RS Jiwa Tampan Provinsi Riau",
+          category: "Rumah Sakit",
+          area: "Binawidya",
+        },
+        {
+          name: "RS Islam Ibnu Sina Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Sukajadi",
+        },
+        {
+          name: "RS Hermina Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Binawidya",
+        },
+        {
+          name: "RS Bina Kasih",
+          category: "Rumah Sakit",
+          area: "Senapelan",
+        },
+        {
+          name: "RS Bhayangkara Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Pekanbaru Kota",
+        },
+        {
+          name: "RS Bhayangkara Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Pekanbaru Kota",
+        },
+        {
+          name: "RS Awal Bros Sudirman",
+          category: "Rumah Sakit",
+          area: "Bukit Raya",
+        },
+        {
+          name: "RS Awal Bros Panam",
+          category: "Rumah Sakit",
+          area: "Tuah Madani",
+        },
+        {
+          name: "RS Awal Bros Ahmad Yani",
+          category: "Rumah Sakit",
+          area: "Pekanbaru Kota",
+        },
+        {
+          name: "RS Aulia Hospital",
+          category: "Rumah Sakit",
+          area: "Tuah Madani",
+        },
+        {
+          name: "Pekanbaru Eye Center (PBEC)",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "Eka Hospital Pekanbaru",
+          category: "Rumah Sakit",
+          area: "Marpoyan Damai",
+        },
+
+        // ==================== PUSKESMAS ====================
+        {
+          name: "Puskesmas Garuda",
+          category: "Puskesmas",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "Puskesmas Harapan Raya",
+          category: "Puskesmas",
+          area: "Bukit Raya",
+        },
+        {
+          name: "Puskesmas Langsat",
+          category: "Puskesmas",
+          area: "Sukajadi",
+        },
+        {
+          name: "Puskesmas Lima Puluh",
+          category: "Puskesmas",
+          area: "Lima Puluh",
+        },
+        {
+          name: "Puskesmas Melur",
+          category: "Puskesmas",
+          area: "Sukajadi",
+        },
+        {
+          name: "Puskesmas Payung Sekaki",
+          category: "Puskesmas",
+          area: "Payung Sekaki",
+        },
+        {
+          name: "Puskesmas Pekanbaru Kota",
+          category: "Puskesmas",
+          area: "Pekanbaru Kota",
+        },
+        {
+          name: "Puskesmas Rejosari",
+          category: "Puskesmas",
+          area: "Tenayan Raya",
+        },
+        {
+          name: "Puskesmas RI Karya Wanita",
+          category: "Puskesmas",
+          area: "Rumbai",
+        },
+        {
+          name: "Puskesmas RI Muara Fajar",
+          category: "Puskesmas",
+          area: "Rumbai Barat",
+        },
+        {
+          name: "Puskesmas RI Sidomulyo",
+          category: "Puskesmas",
+          area: "Binawidya",
+        },
+        {
+          name: "Puskesmas RI Simpang Tiga",
+          category: "Puskesmas",
+          area: "Marpoyan Damai",
+        },
+        {
+          name: "Puskesmas RI Tenayan Raya",
+          category: "Puskesmas",
+          area: "Tenayan Raya",
+        },
+        {
+          name: "Puskesmas Rumbai",
+          category: "Puskesmas",
+          area: "Rumbai",
+        },
+        {
+          name: "Puskesmas Rumbai Bukit",
+          category: "Puskesmas",
+          area: "Rumbai Barat",
+        },
+        {
+          name: "Puskesmas Sail",
+          category: "Puskesmas",
+          area: "Sail",
+        },
+        {
+          name: "Puskesmas Sapta Taruna",
+          category: "Puskesmas",
+          area: "Bukit Raya",
+        },
+        {
+          name: "Puskesmas Senapelan",
+          category: "Puskesmas",
+          area: "Senapelan",
+        },
+        {
+          name: "Puskesmas Sidomulyo",
+          category: "Puskesmas",
+          area: "Binawidya",
+        },
+        {
+          name: "Puskesmas Simpang Baru",
+          category: "Puskesmas",
+          area: "Binawidya",
+        },
+        {
+          name: "Puskesmas Umban Sari",
+          category: "Puskesmas",
+          area: "Rumbai",
+        },
+      ];
+
+      const slides = document.querySelectorAll(".hero-slide");
+      const dots = document.querySelectorAll(".dot");
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        dots.forEach((dot) => dot.classList.remove("active"));
+        slides[index].classList.add("active");
+        dots[index].classList.add("active");
+        currentSlide = index;
+      }
+
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () =>
+          showSlide(Number(dot.dataset.slide)),
+        );
+      });
+
+      setInterval(() => showSlide((currentSlide + 1) % slides.length), 4200);
+
+      const navLinks = document.querySelectorAll(".nav-link");
+      const sections = document.querySelectorAll("section[id]");
+
+      window.addEventListener("scroll", () => {
+        let current = "";
+        sections.forEach((section) => {
+          if (scrollY >= section.offsetTop - 130) current = section.id;
+        });
+
+        navLinks.forEach((link) => {
+          link.classList.toggle(
+            "active",
+            link.getAttribute("href") === "#" + current,
+          );
+        });
+
+        document
+          .getElementById("toTop")
+          .classList.toggle("show", scrollY > 500);
+      });
+
+      document.getElementById("toTop").addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      const revealItems = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("show");
+          });
+        },
+        { threshold: 0.15 },
+      );
+      revealItems.forEach((item) => revealObserver.observe(item));
+
+      const counters = document.querySelectorAll(".counter");
+      let counterStarted = false;
+
+      function startCounters() {
+        if (counterStarted) return;
+        counterStarted = true;
+
+        counters.forEach((counter) => {
+          const target = Number(counter.dataset.target);
+          let count = 0;
+          const step = Math.ceil(target / 36);
+          const timer = setInterval(() => {
+            count += step;
+            if (count >= target) {
+              counter.textContent = target;
+              clearInterval(timer);
+            } else {
+              counter.textContent = count;
+            }
+          }, 24);
+        });
+      }
+
+      new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) startCounters();
+        },
+        { threshold: 0.4 },
+      ).observe(document.querySelector("#ringkasan"));
+
+      const dataTable = document.getElementById("dataTable");
+      const tableSearch = document.getElementById("tableSearch");
+      const tableCategory = document.getElementById("tableCategory");
+      const tableInfo = document.getElementById("tableInfo");
+      const pagination = document.getElementById("pagination");
+      const perPage = 10;
+      let currentPage = 1;
+
+      function filteredTableData() {
+        const keyword = tableSearch.value.toLowerCase();
+        const category = tableCategory.value;
+
+        return facilities.filter((item) => {
+          const keywordMatch =
+            item.name.toLowerCase().includes(keyword) ||
+            item.category.toLowerCase().includes(keyword) ||
+            item.area.toLowerCase().includes(keyword);
+
+          const categoryMatch =
+            category === "semua" || item.category === category;
+          return keywordMatch && categoryMatch;
+        });
+      }
+
+      function renderTable() {
+        const data = filteredTableData();
+        const totalPages = Math.ceil(data.length / perPage) || 1;
+        if (currentPage > totalPages) currentPage = 1;
+
+        const start = (currentPage - 1) * perPage;
+        const shown = data.slice(start, start + perPage);
+
+        dataTable.innerHTML = shown
+          .map(
+            (item, index) => `
+        <tr>
+          <td>${start + index + 1}</td>
+          <td><strong>${item.name}</strong></td>
+          <td><span class="table-badge ${item.category === "Rumah Sakit" ? "rs" : "pkm"}">${item.category}</span></td>
+          <td>${item.area}</td>
+          <td><span class="status-badge">Tersedia</span></td>
+        </tr>
+      `,
+          )
+          .join("");
+
+        tableInfo.textContent = `Menampilkan ${shown.length} dari ${data.length} data faskes`;
+
+        pagination.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.textContent = i;
+          btn.className = i === currentPage ? "page-btn active" : "page-btn";
+          btn.addEventListener("click", () => {
+            currentPage = i;
+            renderTable();
+            document
+              .querySelector("#data-faskes")
+              .scrollIntoView({ behavior: "smooth" });
+          });
+          pagination.appendChild(btn);
+        }
+      }
+
+      tableSearch.addEventListener("input", () => {
+        currentPage = 1;
+        renderTable();
+      });
+
+      tableCategory.addEventListener("change", () => {
+        currentPage = 1;
+        renderTable();
+      });
+
+      const mapSearch = document.getElementById("mapSearch");
+      const mapCategory = document.getElementById("mapCategory");
+      const mapResultCount = document.getElementById("mapResultCount");
+      const facilityList = document.getElementById("facilityList");
+      const map = document.getElementById("map");
+
+      function filteredMapData() {
+        const keyword = mapSearch.value.toLowerCase();
+        const category = mapCategory.value;
+
+        return facilities.filter((item) => {
+          const keywordMatch =
+            item.name.toLowerCase().includes(keyword) ||
+            item.area.toLowerCase().includes(keyword);
+
+          const categoryMatch =
+            category === "semua" || item.category === category;
+          return keywordMatch && categoryMatch;
+        });
+      }
+
+      function renderPins(data) {
+        document.querySelectorAll(".map-pin").forEach((pin) => pin.remove());
+
+        data.forEach((item) => {
+          const index = facilities.indexOf(item);
+          const pos = pinPositions[index];
+          const pin = document.createElement("span");
+          pin.className = `map-pin ${item.category === "Rumah Sakit" ? "rs" : "pkm"}`;
+          pin.style.left = pos[0] + "%";
+          pin.style.top = pos[1] + "%";
+          pin.innerHTML = `<i class="fa-solid ${item.category === "Rumah Sakit" ? "fa-hospital" : "fa-house-medical"}"></i>`;
+          pin.title = item.name;
+          map.appendChild(pin);
+        });
+      }
+
+      function renderMapList() {
+        const data = filteredMapData();
+        mapResultCount.textContent = `Menampilkan ${data.length} dari ${facilities.length} data faskes`;
+
+        facilityList.innerHTML = data
+          .slice(0, 12)
+          .map(
+            (item) => `
+        <article class="facility-card">
+          <span class="${item.category === "Rumah Sakit" ? "rs-icon" : "pkm-icon"}">
+            <i class="fa-solid ${item.category === "Rumah Sakit" ? "fa-hospital" : "fa-house-medical"}"></i>
+          </span>
+          <div>
+            <h4>${item.name}</h4>
+            <strong>${item.category}</strong>
+            <p>${item.area}</p>
+          </div>
+        </article>
+      `,
+          )
+          .join("");
+
+        renderPins(data);
+      }
+
+      mapSearch.addEventListener("input", renderMapList);
+      mapCategory.addEventListener("change", renderMapList);
+
+      document
+        .querySelectorAll(
+          ".summary-card, .data-card, .filter-panel, .map-panel, .health-main, .health-list article, .about-cards article",
+        )
+        .forEach((card) => {
+          card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty("--x", e.clientX - rect.left + "px");
+            card.style.setProperty("--y", e.clientY - rect.top + "px");
+          });
+        });
+
+      renderTable();
+      renderMapList();
+    </script>
+    <script src="map.js"></script>
+  </body>
+</html>
